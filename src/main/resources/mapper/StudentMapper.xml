@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kingstar.mapper.StudentMapper">
+
+    <select id="getStudentList" parameterType="com.kingstar.bean.Page" resultType="com.kingstar.bean.Student">
+        select * from student where deleted=0 order by create_time desc limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="getStudentCount" resultType="_int">
+        select count(*) from student where deleted=0
+    </select>
+
+    <select id="getStudentById" parameterType="java.lang.Integer" resultType="com.kingstar.bean.Student">
+        select * from student where id=#{id} and deleted=0
+    </select>
+
+    <insert id="addStudent" parameterType="com.kingstar.bean.Student">
+        INSERT INTO student (id,name,age,class_id,create_time,update_time,deleted) VALUES (#{id},#{name},#{age},#{classId},now(),now(),0)
+    </insert>
+
+    <update id="updateStudent" parameterType="com.kingstar.bean.Student">
+        UPDATE student SET name=#{name},age=#{age},class_id=#{classId},update_time=now() WHERE id=#{id}
+    </update>
+
+    <update id="removeStudent" parameterType="java.lang.Integer">
+        UPDATE student SET deleted=1,update_time=now() WHERE id=#{id}
+    </update>
+
+    <delete id="deletedStudent" parameterType="java.lang.Integer">
+            DELETE FROM student WHERE id=#{id}
+        </delete>
+</mapper>
