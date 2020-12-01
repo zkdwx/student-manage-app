@@ -12,7 +12,6 @@ public interface StudentService {
 
     public int getStudentCount();
 
-
     public Student getStudentById(Integer id);
 
     public Integer addStudent(Student student);
